@@ -3,8 +3,12 @@
 import { FileCode, Code, ImageIcon } from "lucide-react";
 import { Form } from "@/components/Form";
 import { Preview } from "@/components/Preview";
+import { useState } from "react";
 
 export default function HomePage() {
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [html, setHtml] = useState("");
+  const [css, setCss] = useState("");
   return (
     <div className="relative bg-primary ">
       <div className="absolute inset-0  opacity-35 pointer-events-none overflow-y-hidden">
@@ -30,8 +34,14 @@ export default function HomePage() {
 
           {/* Two-column layout */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Form />
-            <Preview />
+            <Form
+              onImageGenerated={(url, htmlCode, cssCode) => {
+                setPreviewUrl(url);
+                setHtml(htmlCode);
+                setCss(cssCode);
+              }}
+            />
+            <Preview imageUrl={previewUrl} html={html} css={css} />
           </div>
         </div>
       </main>

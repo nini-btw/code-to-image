@@ -2,8 +2,13 @@
 
 import { useState } from "react";
 import { Code, ImageIcon } from "lucide-react";
+interface PreviewProps {
+  imageUrl: string | null;
+  html: string;
+  css: string;
+}
 
-export function Preview() {
+export function Preview({ imageUrl, html, css }: PreviewProps) {
   const [viewMode, setViewMode] = useState<"image" | "code">("image");
 
   return (
@@ -14,7 +19,7 @@ export function Preview() {
           className={`flex items-center gap-1 px-3 py-1 rounded text-sm ${
             viewMode === "image"
               ? "bg-primary text-white"
-              : "bg-primary-light text-gray-700  hover:bg-primary-hover  hover:text-white"
+              : "bg-primary-light text-gray-700 hover:bg-primary-hover hover:text-white"
           }`}
           onClick={() => setViewMode("image")}
         >
@@ -26,7 +31,7 @@ export function Preview() {
           className={`flex items-center gap-1 px-3 py-1 rounded text-sm ${
             viewMode === "code"
               ? "bg-primary text-white"
-              : "bg-primary-light text-gray-700  hover:bg-primary-hover hover:text-white"
+              : "bg-primary-light text-gray-700 hover:bg-primary-hover hover:text-white"
           }`}
           onClick={() => setViewMode("code")}
         >
@@ -38,11 +43,30 @@ export function Preview() {
       {/* Content */}
       <div className="flex-1 flex items-center justify-center text-sm text-gray-500 border border-gray-200 rounded p-4 bg-white min-h-[200px]">
         {viewMode === "image" ? (
-          <p className="text-gray-400">Your image preview will appear here</p>
+          imageUrl ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={imageUrl}
+              alt="Preview"
+              className="max-w-full max-h-[400px] rounded"
+            />
+          ) : (
+            <p className="text-gray-400">Your image preview will appear here</p>
+          )
         ) : (
-          <pre className="text-left text-xs w-full overflow-auto">
-            {`<div>Hello World</div>\n<style>\ndiv { color: red; }\n</style>`}
-          </pre>
+          <div className="w-full h-full border border-gray-200 rounded overflow-auto bg-white p-4">
+            <iframe
+              className="w-full h-[300px] border-none"
+              srcDoc={`<!DOCTYPE html>
+                          <html>
+                            <head>
+                              <style>${css}</style>
+                            </head>
+                            <body style="margin:0;padding:0;">${html}</body>
+                          </html>`}
+              sandbox="allow-same-origin"
+            />
+          </div>
         )}
       </div>
     </div>
