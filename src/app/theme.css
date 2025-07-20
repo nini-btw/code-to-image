@@ -1,0 +1,8 @@
+@theme {
+  --color-primary: #0d9488; /* Active Teal */
+  --color-primary-hover: #0f766e; /* Slightly darker for hover */
+  --color-primary-light: #99f6e4; /* Light for inactive/background */
+
+  /* Place holder */
+  --color-placeholder: #94a3b8;
+}
