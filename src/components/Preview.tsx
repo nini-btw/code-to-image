@@ -44,12 +44,24 @@ export function Preview({ imageUrl, html, css }: PreviewProps) {
       <div className="flex-1 flex items-center justify-center text-sm text-gray-500 border border-gray-200 rounded p-4 bg-white min-h-[200px]">
         {viewMode === "image" ? (
           imageUrl ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={imageUrl}
-              alt="Preview"
-              className="max-w-full max-h-[400px] rounded"
-            />
+            <div className="flex flex-col items-center gap-4">
+              {/* Image preview */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={imageUrl}
+                alt="Preview"
+                className="max-w-full max-h-[400px] rounded"
+              />
+
+              {/* Download button */}
+              <a
+                href={imageUrl}
+                download="preview.png"
+                className="inline-block px-4 py-2 bg-primary text-white text-sm rounded hover:bg-primary-hover"
+              >
+                Download Image
+              </a>
+            </div>
           ) : (
             <p className="text-gray-400">Your image preview will appear here</p>
           )
